@@ -1,0 +1,23 @@
+{
+  "name": "task_tracker",
+  "version": "1.0.0",
+  "description": "task tracker cli",
+  "keywords": [
+    "node"
+  ],
+  "homepage": "https://github.com/ivane98/task_tracker#readme",
+  "bugs": {
+    "url": "https://github.com/ivane98/task_tracker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivane98/task_tracker.git"
+  },
+  "license": "ISC",
+  "author": "ivane98",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
