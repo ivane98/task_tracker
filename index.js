@@ -1,92 +1,86 @@
 import readline from "node:readline";
-import fs from "fs";
-
-export function writeToJSON(newData) {
-  const filePath = "./tasks.json";
-
-  // Read existing data
-  let fileData = [];
-  if (fs.existsSync(filePath)) {
-    const raw = fs.readFileSync(filePath, "utf-8");
-    fileData = { raw } ? JSON.parse(raw) : [];
-  }
-
-  // Add new data
-  const sortedTasks = fileData.slice().sort((a, b) => {
-    let x = a.id < b.id ? 1 : -1;
-    return x;
-  });
-
-  const taskId = sortedTasks[0] ? sortedTasks[0]["id"] + 1 : 1;
-
-  fileData.push({
-    id: taskId,
-    description: newData,
-    status: "todo",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-  console.log(fileData);
-
-  // Write back to file
-  fs.writeFileSync(filePath, JSON.stringify(fileData, null, 2), "utf-8");
-}
-
-export function updateJSON(newData, id) {
-  const filePath = "./tasks.json";
-
-  // Read existing data
-  let fileData = [];
-  if (fs.existsSync(filePath)) {
-    const raw = fs.readFileSync(filePath, "utf-8");
-    fileData = { raw } ? JSON.parse(raw) : [];
-  }
-
-  let taskToUpdate = fileData.find((task) => task.id === id);
-  taskToUpdate.task = newData;
-
-  // Write back to file
-  fs.writeFileSync(filePath, JSON.stringify(fileData, null, 2), "utf-8");
-}
-
-export function deleteFromJSON(id) {
-  const filePath = "./tasks.json";
-
-  // Read existing data
-  let fileData = [];
-  if (fs.existsSync(filePath)) {
-    const raw = fs.readFileSync(filePath, "utf-8");
-    fileData = { raw } ? JSON.parse(raw) : [];
-  }
-
-  fileData = fileData.filter((task) => task.id !== id);
-
-  // Write back to file
-  fs.writeFileSync(filePath, JSON.stringify(fileData, null, 2), "utf-8");
-}
+import {
+  writeToJSON,
+  listAllTasks,
+  listByStatus,
+  updateJSON,
+  markInProgress,
+  markDone,
+  deleteFromJSON,
+} from "./tasks";
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-rl.question(`task-tracker `, (input) => {
-  let command;
-  if (input.split('"')[0].trim().split(" ").length > 1) {
-    command = input.split('"')[0].trim().split(" ")[0];
-  } else {
-    command = input.split('"')[0].trim();
-  }
-  if (command === "add") {
-    const task = input.split('"')[1];
-    writeToJSON(task);
-  } else if (command === "update") {
-    const id = parseInt(input.split('"')[0].trim().split(" ")[1]);
-    const task = input.split('"')[1];
-    updateJSON(task, id);
-  } else if (command === "delete") {
-    const id = parseInt(input.split('"')[0].trim().split(" ")[1]);
-    deleteFromJSON(id);
+rl.question("task-tracker ", (input) => {
+  // Extract command, args, and optional quoted text (e.g., task description)
+  const [command, ...args] = input.trim().split(" ");
+  const quoted = input.includes('"') ? input.split('"')[1] : null;
+
+  switch (command) {
+    case "add": {
+      if (!quoted) {
+        console.log("❌ Please provide a task description in quotes.");
+        break;
+      }
+      writeToJSON(quoted);
+      break;
+    }
+
+    case "update": {
+      const id = parseInt(args[0]);
+      if (isNaN(id) || !quoted) {
+        console.log('❌ Usage: update <id> "new description"');
+        break;
+      }
+      updateJSON(quoted, id);
+      break;
+    }
+
+    case "delete": {
+      const id = parseInt(args[0]);
+      if (isNaN(id)) {
+        console.log("❌ Usage: delete <id>");
+        break;
+      }
+      deleteFromJSON(id);
+      break;
+    }
+
+    case "mark-in-progress": {
+      const id = parseInt(args[0]);
+      if (isNaN(id)) {
+        console.log("❌ Usage: mark-in-progress <id>");
+        break;
+      }
+      markInProgress(id);
+      break;
+    }
+
+    case "mark-done": {
+      const id = parseInt(args[0]);
+      if (isNaN(id)) {
+        console.log("❌ Usage: mark-done <id>");
+        break;
+      }
+      markDone(id);
+      break;
+    }
+
+    case "list": {
+      const status = args[0];
+      if (["todo", "in-progress", "done"].includes(status)) {
+        listByStatus(status);
+      } else {
+        listAllTasks();
+      }
+      break;
+    }
+
+    default:
+      console.log("❌ Unknown command");
   }
 
   rl.close();

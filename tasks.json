@@ -1,16 +1,9 @@
 [
   {
     "id": 1,
-    "description": "todo1",
-    "status": "todo",
-    "createdAt": "2025-08-19T05:25:41.804Z",
-    "updatedAt": "2025-08-19T05:25:41.804Z"
-  },
-  {
-    "id": 2,
-    "description": "todo2",
-    "status": "todo",
-    "createdAt": "2025-08-19T05:26:06.584Z",
-    "updatedAt": "2025-08-19T05:26:06.584Z"
+    "description": "goodbye",
+    "status": "done",
+    "createdAt": "2025-08-20T05:12:00.031Z",
+    "updatedAt": "2025-08-20T05:13:27.012Z"
   }
 ]
