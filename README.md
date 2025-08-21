@@ -35,11 +35,11 @@ You can add, list, update, delete, and mark tasks as done using simple commands.
 Run the CLI with node:
 node index.js <command> [options]
 
-Commands:
+Commands: <br/>
 add <task> Add a new task <br/>
-list List all tasks
-update <id> <task> Update a task by ID
-delete <id> Delete a task by ID
+list List all tasks <br/>
+update <id> <task> Update a task by ID <br/>
+delete <id> Delete a task by ID <br/>
 
 ## Example
 
