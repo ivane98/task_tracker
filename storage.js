@@ -9,7 +9,7 @@ export function readTasks() {
     return raw ? JSON.parse(raw) : [];
   } catch (err) {
     console.error("❌ Error reading tasks:", err.message);
-    return []; // return empty array so program continues
+    return [];
   }
 }
 

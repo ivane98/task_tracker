@@ -15,7 +15,6 @@ const rl = readline.createInterface({
 });
 
 rl.question("task-tracker ", (input) => {
-  // Extract command, args, and optional quoted text (e.g., task description)
   const [command, ...args] = input.trim().split(" ");
   const quoted = input.includes('"') ? input.split('"')[1] : null;
 
