@@ -43,17 +43,17 @@ delete <id> Delete a task by ID <br/>
 
 ## Example
 
-node index.js add "Buy groceries"
-node index.js list
-node index.js update 1 "Buy groceries and cook dinner"
-node index.js delete 1
+node index.js add "Buy groceries" <br/>
+node index.js list <br />
+node index.js update 1 "Buy groceries and cook dinner" <br />
+node index.js delete 1 <br />
 
 ## Project structure
 
-task-tracker/
-│
-├── index.js # Handles command-line parsing
-├── tasks.js # Task operations (add, list, update, delete)
-├── storage.js # Handles reading/writing tasks.json
-├── tasks.json # Local file where tasks are stored
+task-tracker/ <br/>
+│ <br />
+├── index.js # Handles command-line parsing <br />
+├── tasks.js # Task operations (add, list, update, delete) <br />
+├── storage.js # Handles reading/writing tasks.json <br />
+├── tasks.json # Local file where tasks are stored <br />
 └── package.json
