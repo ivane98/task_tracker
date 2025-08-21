@@ -36,7 +36,7 @@ Run the CLI with node:
 node index.js <command> [options]
 
 Commands:
-add <task> Add a new task
+add <task> Add a new task <br/>
 list List all tasks
 update <id> <task> Update a task by ID
 delete <id> Delete a task by ID
