@@ -1,33 +1,35 @@
 import { readTasks, writeTasks } from "./storage.js";
 
-export function writeToJSON(newData) {
-  let fileData = readTasks();
-  const maxId = fileData.length ? Math.max(...fileData.map((t) => t.id)) : 0;
+export function writeToJSON(description) {
+  const tasks = readTasks();
+  const maxId = tasks.length ? Math.max(...tasks.map((t) => t.id)) : 0;
   const taskId = maxId + 1;
 
-  fileData.push({
+  const newTask = {
     id: taskId,
-    description: newData,
+    description,
     status: "todo",
     createdAt: new Date(),
     updatedAt: new Date(),
-  });
+  };
 
-  writeTasks(fileData);
+  tasks.push(newTask);
+
+  writeTasks(tasks);
 }
 
 export function listAllTasks() {
-  const fileData = readTasks();
-  if (fileData.length === 0) {
+  const tasks = readTasks();
+  if (tasks.length === 0) {
     console.log("⚠️ No tasks found.");
     return;
   }
-  console.log(fileData);
+  console.log(tasks);
 }
 
 export function listByStatus(status) {
-  const fileData = readTasks();
-  const filtered = fileData.filter((t) => t.status === status);
+  const tasks = readTasks();
+  const filtered = tasks.filter((t) => t.status === status);
 
   if (filtered.length === 0) {
     console.log(`⚠️ No tasks with status "${status}" found.`);
@@ -36,58 +38,52 @@ export function listByStatus(status) {
   console.log(filtered);
 }
 
-export function updateJSON(newData, id) {
-  let fileData = readTasks();
-  const task = fileData.find((t) => t.id === id);
+export function updateJSON(description, id) {
+  let tasks = readTasks();
+  const task = tasks.find((t) => t.id === id);
 
   if (!task) {
     console.log(`⚠️ Task with id ${id} not found.`);
     return;
   }
 
-  task.description = newData;
+  task.description = description;
   task.updatedAt = new Date();
-  writeTasks(fileData);
+  writeTasks(tasks);
+}
+
+export function updateStatus(id, newStatus) {
+  const tasks = readTasks();
+  const task = tasks.find((t) => t.id === id);
+
+  if (!task) {
+    console.log(`⚠️ Task with id ${id} not found.`);
+    return;
+  }
+
+  task.status = newStatus;
+  task.updatedAt = new Date();
+  writeTasks(tasks);
 }
 
 export function markInProgress(id) {
-  let fileData = readTasks();
-  const task = fileData.find((t) => t.id === id);
-
-  if (!task) {
-    console.log(`⚠️ Task with id ${id} not found.`);
-    return;
-  }
-
-  task.status = "in-progress";
-  task.updatedAt = new Date();
-  writeTasks(fileData);
+  updateStatus(id, "in-progress");
 }
 
 export function markDone(id) {
-  let fileData = readTasks();
-  const task = fileData.find((t) => t.id === id);
-
-  if (!task) {
-    console.log(`⚠️ Task with id ${id} not found.`);
-    return;
-  }
-
-  task.status = "done";
-  task.updatedAt = new Date();
-  writeTasks(fileData);
+  updateStatus(id, "done");
 }
 
 export function deleteFromJSON(id) {
-  let fileData = readTasks();
-  const initialLength = fileData.length;
+  const tasks = readTasks();
+  const initialLength = tasks.length;
 
-  fileData = fileData.filter((t) => t.id !== id);
+  tasks = tasks.filter((t) => t.id !== id);
 
-  if (fileData.length === initialLength) {
+  if (tasks.length === initialLength) {
     console.log(`⚠️ Task with id ${id} not found.`);
     return;
   }
 
-  writeTasks(fileData);
+  writeTasks(tasks);
 }

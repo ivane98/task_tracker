@@ -7,7 +7,7 @@ import {
   markInProgress,
   markDone,
   deleteFromJSON,
-} from "./tasks";
+} from "./tasks.js";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -21,7 +21,7 @@ rl.question("task-tracker ", (input) => {
   switch (command) {
     case "add": {
       if (!quoted) {
-        console.log("❌ Please provide a task description in quotes.");
+        console.log('❌ Usage: add "task description"');
         break;
       }
       writeToJSON(quoted);
@@ -29,8 +29,8 @@ rl.question("task-tracker ", (input) => {
     }
 
     case "update": {
-      const id = parseInt(args[0]);
-      if (isNaN(id) || !quoted) {
+      const id = Number(args[0]);
+      if (!id || !quoted) {
         console.log('❌ Usage: update <id> "new description"');
         break;
       }
@@ -39,8 +39,8 @@ rl.question("task-tracker ", (input) => {
     }
 
     case "delete": {
-      const id = parseInt(args[0]);
-      if (isNaN(id)) {
+      const id = Number(args[0]);
+      if (!id) {
         console.log("❌ Usage: delete <id>");
         break;
       }
@@ -49,8 +49,8 @@ rl.question("task-tracker ", (input) => {
     }
 
     case "mark-in-progress": {
-      const id = parseInt(args[0]);
-      if (isNaN(id)) {
+      const id = Number(args[0]);
+      if (!id) {
         console.log("❌ Usage: mark-in-progress <id>");
         break;
       }
@@ -59,8 +59,8 @@ rl.question("task-tracker ", (input) => {
     }
 
     case "mark-done": {
-      const id = parseInt(args[0]);
-      if (isNaN(id)) {
+      const id = Number(args[0]);
+      if (!id) {
         console.log("❌ Usage: mark-done <id>");
         break;
       }
