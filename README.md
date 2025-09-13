@@ -25,28 +25,37 @@ You can add, list, update, delete, and mark tasks as done using simple commands.
    ```
 
 2. Navigate to the project folder:
+   ```
    cd task-tracker-cli
+   ```
 
-3. Install dependencies:
+4. Install dependencies:
+   ```
    npm install
+   ```
 
 ## Usage
 
 Run the CLI with node:
+```
 node index.js <command> [options]
+```
 
 Commands: <br/>
-add <task> Add a new task <br/>
-list List all tasks <br/>
-update <id> <task> Update a task by ID <br/>
-delete <id> Delete a task by ID <br/>
+```
+add <task> --> Add a new task 
+list --> List all tasks 
+update <id> <task> --> Update a task by ID 
+delete <id> --> Delete a task by ID 
+```
 
 ## Example
-
-node index.js add "Buy groceries" <br/>
-node index.js list <br />
-node index.js update 1 "Buy groceries and cook dinner" <br />
-node index.js delete 1 <br />
+```
+node index.js add "Buy groceries" 
+node index.js list 
+node index.js update 1 "Buy groceries and cook dinner" 
+node index.js delete 1 
+```
 
 ## Project structure
 
